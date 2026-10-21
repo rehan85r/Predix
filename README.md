@@ -4,25 +4,30 @@
 
 Prediction intelligence MVP for the Tatum × Walrus Memory hackathon.
 
-## Current status
+## Status
 
-This is a frontend-only prototype with a responsive dashboard, BTC/ETH forecast entry and browser-local prediction history. **It does not yet connect to AI, Tatum, Walrus Memory, live market prices, or automatic outcome verification.** Forecasts are manually entered and remain unresolved. No financial advice.
+Next.js dashboard with browser-local history and a server-side Supabase prediction API. The API requires secrets in Vercel; it returns 503 until configured. **The UI does not yet use the backend.** Live AI, Tatum, Walrus, market-price verification and accuracy scoring are not implemented.
 
-## Local setup
+## Local development
 
 ```bash
 npm install
+cp .env.example .env.local
 npm run dev
 ```
 
-Visit http://localhost:3000.
+## Backend setup
+
+Set `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `PREDIX_WRITE_TOKEN` as encrypted **server-only** environment variables in Vercel. Never commit secrets or expose them via `NEXT_PUBLIC_`. The service-role key bypasses RLS and must stay server-side.
+
+`GET /api/predictions` returns up to 100 records and `POST /api/predictions` accepts `{ "asset":"BTC", "direction":"UP", "probability":60, "reasoning":"..." }`. Both require `Authorization: Bearer <PREDIX_WRITE_TOKEN>`. This shared-token API is for private development only; implement user authentication and rate limiting before exposing to public clients. The frontend intentionally remains local until proper authentication is in place.
 
 ## Roadmap
 
-1. Implement server-side prediction API and persistence.
-2. Add trusted market price feeds and time-bounded outcome verification.
-3. Integrate Walrus Memory for durable historical records.
-4. Integrate Tatum for meaningful onchain data.
-5. Add AI analysis, evaluation and source reliability scoring.
+1. User authentication and server-side persistence wired into the dashboard.
+2. Trusted market prices, reference-price capture, outcome verification and calibration metrics.
+3. Walrus Memory persistence and historical recall.
+4. Tatum onchain context.
+5. AI forecasts and source trust evaluation.
 
-Never commit real API keys. Use environment variables on the server.
+No financial advice.
