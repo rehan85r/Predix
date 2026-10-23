@@ -31,3 +31,7 @@ Set `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `PREDIX_WRITE_TOKEN` as enc
 5. AI forecasts and source trust evaluation.
 
 No financial advice.
+
+## Outcome verification (implemented, not yet scheduled)
+
+Predictions created through the protected API now capture a fresh CoinGecko reference price and a 24-hour target timestamp. The protected `GET /api/verify` endpoint uses `Authorization: Bearer <CRON_SECRET>` to evaluate pending predictions against a fresh price observed between the target time and 65 minutes afterward. It stores verified outcomes and Brier scores, and marks records invalid if that observation window has passed. It must be invoked at least hourly to cover the verification window; no cron schedule is installed yet. Existing browser-local forecasts cannot be verified this way, and old API records without a reference price remain ineligible. A production-grade system should capture an exact historical target-time quote, persist source timestamps, and add audit events and retries. CoinGecko rate limits may affect verification.
