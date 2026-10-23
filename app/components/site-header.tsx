@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "./ui-icon";
 
-const links = [["/markets", "Markets"], ["/prediction-lab", "Prediction Lab"], ["/memory", "Memory"], ["/history", "History"]] as const;
+const links = [["/markets", "Markets"], ["/prediction-lab", "Predict"], ["/memory", "Memory"], ["/history", "History"]] as const;
 
 export default function SiteHeader() {
   const path = usePathname();
@@ -36,7 +36,7 @@ export default function SiteHeader() {
           {links.map(([href, label]) => <Link key={href} href={href} className={path === href ? "active" : ""} aria-current={path === href ? "page" : undefined}>{label}</Link>)}
         </nav>
         <Link className="header-cta" href={path === "/prediction-lab" ? "/history" : "/prediction-lab"}>
-          {path === "/prediction-lab" ? "Your history" : "Open workspace"}<Icon name="arrow-up-right" size={16} />
+          {path === "/prediction-lab" ? "Your history" : "Make prediction"}<Icon name="arrow-up-right" size={16} />
         </Link>
         <button ref={menuButton} className="menu-toggle" type="button" aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(value => !value)}>
           <Icon name={open ? "close" : "menu"} size={21} />
