@@ -1,0 +1,3 @@
+export type Prediction={id:string;asset:"BTC"|"ETH";direction:"UP"|"DOWN";probability:number;reasoning:string;createdAt:string;status:"Unresolved"};
+export const STORAGE_KEY="predix-demo-predictions-v1";
+export function loadPredictions():Prediction[]{try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");return Array.isArray(value)?value.filter((v):v is Prediction=>v&&typeof v.id==="string"&&(v.asset==="BTC"||v.asset==="ETH")&&(v.direction==="UP"||v.direction==="DOWN")&&typeof v.probability==="number"&&Number.isFinite(v.probability)&&typeof v.createdAt==="string"):[]}catch{return []}}
