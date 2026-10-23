@@ -1,4 +1,5 @@
 import "./globals.css";
-import type { ReactNode } from "react";
-export const metadata = { title: "Predix | Predict. Remember. Improve.", description: "Prediction intelligence with persistent memory" };
-export default function RootLayout({ children }: { children: ReactNode }) { return <html lang="en"><body>{children}</body></html>; }
+import type {ReactNode} from "react";
+import SiteHeader from "./components/site-header";
+export const metadata={title:"Predix | Prediction Intelligence",description:"Research crypto predictions, preserve reasoning and measure outcomes"};
+export default function RootLayout({children}:{children:ReactNode}){return <html lang="en"><body><SiteHeader/>{children}</body></html>}
